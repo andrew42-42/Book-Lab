@@ -50,14 +50,12 @@ public class Book
     else{
       String convertedWord = "";
       String punctuation = "!.,;:@#$%^&*()-_'?";
-      String cap = word.substring(0,1);
       String base = word;
       String endPunc = "";
       int earliestPunc = 999;
       Character firstLetter = word.charAt(0);
       int puncCount = -1;
       base.toLowerCase();
-      cap.toUpperCase();
 
       if(punctuation.contains(word.substring(word.length()-1))){
         for(int i=0; i<word.length(); i++){
@@ -75,7 +73,7 @@ public class Book
       convertedWord = pigLatin(base) + endPunc;
       
       if(Character.isUpperCase(firstLetter)){
-      convertedWord = (pigLatin(base)).substring(0,1).toUpperCase() + (pigLatin(base)).substring(1) + endPunc;
+      convertedWord = (pigLatin(base)).substring(0,1).toUpperCase() + (pigLatin(base)).substring(1).toLowerCase() + endPunc;
       }
 
       return convertedWord;
@@ -86,6 +84,15 @@ public class Book
   public String translateSentence(String sentence)
   {
     String retSentence = "";
+    int space = sentence.indexOf(" ");
+    while(space>-1){
+      retSentence += translateWord(sentence.substring(0, space)) + " ";
+      sentence = sentence.substring(space + 1);
+      space = sentence.indexOf(" ");
+    }
+    if(sentence.length() > 1){
+      retSentence += translateWord(sentence);
+    }
 
 
     return retSentence;
